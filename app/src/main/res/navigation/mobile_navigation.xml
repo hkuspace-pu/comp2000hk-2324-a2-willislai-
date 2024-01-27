@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="comp2000hk.cw2.seasiderestaurant.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_booking"
+        android:name="comp2000hk.cw2.seasiderestaurant.ui.booking.BookingFragment"
+        android:label="@string/title_booking"
+        tools:layout="@layout/fragment_booking" />
+
+    <fragment
+        android:id="@+id/navigation_addBooking"
+        android:name="comp2000hk.cw2.seasiderestaurant.ui.addBooking.AddBookingFragment"
+        android:label="@string/title_addBooking"
+        tools:layout="@layout/fragment_add_booking" />
+
+    <fragment
+        android:id="@+id/navigation_favourite"
+        android:name="comp2000hk.cw2.seasiderestaurant.ui.favourite.FavouriteFragment"
+        android:label="@string/title_favourite"
+        tools:layout="@layout/fragment_favourite" />
+
+    <fragment
+        android:id="@+id/navigation_preference"
+        android:name="comp2000hk.cw2.seasiderestaurant.ui.preference.PreferenceFragment"
+        android:label="@string/title_preference"
+        tools:layout="@layout/fragment_preference" />
+</navigation>

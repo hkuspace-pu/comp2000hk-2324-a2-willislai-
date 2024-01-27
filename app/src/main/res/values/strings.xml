@@ -20,4 +20,10 @@
     <string name="password">Password</string>
     <string name="password_retype">Retype Password</string>
 
+    <string name="title_home">Home</string>
+    <string name="title_booking">Booking</string>
+    <string name="title_addBooking">Add Booking</string>
+    <string name="title_favourite">Favourite</string>
+    <string name="title_preference">Preference</string>
+
 </resources>
