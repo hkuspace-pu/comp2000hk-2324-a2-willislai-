@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "859942177311",
+    "project_id": "seaside-restaruant-app",
+    "storage_bucket": "seaside-restaruant-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859942177311:android:140b08d39929fae56d632a",
+        "android_client_info": {
+          "package_name": "comp2000hk.cw2.seasiderestaruant"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh15tGS78CUna-zA6uku7G0CEltWJ_Hm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859942177311:android:f593d15023151c6a6d632a",
+        "android_client_info": {
+          "package_name": "comp2000hk.cw2.seasiderestaurant"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh15tGS78CUna-zA6uku7G0CEltWJ_Hm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
