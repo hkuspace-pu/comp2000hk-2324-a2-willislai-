@@ -1,15 +1,15 @@
 {
   "project_info": {
     "project_number": "859942177311",
-    "project_id": "seaside-restaruant-app",
-    "storage_bucket": "seaside-restaruant-app.appspot.com"
+    "project_id": "seaside-restaurant-app",
+    "storage_bucket": "seaside-restaurant-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:859942177311:android:140b08d39929fae56d632a",
         "android_client_info": {
-          "package_name": "comp2000hk.cw2.seasiderestaruant"
+          "package_name": "comp2000hk.cw2.seasiderestaurant"
         }
       },
       "oauth_client": [],
