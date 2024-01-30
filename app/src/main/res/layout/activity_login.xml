@@ -78,22 +78,20 @@
 
         <Button
             android:id="@+id/btnLogin"
-            style="@style/Widget.Material3.ExtendedFloatingActionButton.Primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
             android:background="@color/red_sharp"
             android:backgroundTint="@color/red_sharp"
             android:fontFamily="sans-serif-medium"
-            android:text="@string/login"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:text="@string/btnText_login"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:shapeAppearance="@style/ThemeOverlay.Material3.FloatingActionButton.Primary" />
+            app:shapeAppearance="@style/Base.Theme.SeasideRestaurant" />
 
         <TextView
             android:id="@+id/linkGoRegister"

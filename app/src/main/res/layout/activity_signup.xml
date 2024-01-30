@@ -119,15 +119,13 @@
 
         <Button
             android:id="@+id/btnRegister"
-            style="@style/Widget.Material3.ExtendedFloatingActionButton.Primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="92dp"
             android:background="@color/red_sharp"
             android:backgroundTint="@color/red_sharp"
             android:fontFamily="sans-serif-medium"
-            android:text="@string/register"
-            android:textAppearance="@style/Base.Theme.SeasideRestaurant"
+            android:text="@string/btnText_register"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
