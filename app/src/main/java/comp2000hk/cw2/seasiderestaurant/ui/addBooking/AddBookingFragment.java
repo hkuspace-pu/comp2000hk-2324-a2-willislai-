@@ -1,15 +1,20 @@
 package comp2000hk.cw2.seasiderestaurant.ui.addBooking;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,7 +25,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -28,6 +32,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+import comp2000hk.cw2.seasiderestaurant.R;
 import comp2000hk.cw2.seasiderestaurant.databinding.FragmentAddBookingBinding;
 
 public class AddBookingFragment extends Fragment {
@@ -45,10 +50,37 @@ public class AddBookingFragment extends Fragment {
 
         final TextView textView = binding.textAddBooking;
         EditText etPhoneNo = binding.inputPhoneNumber;
-        EditText etMeal = binding.inputMeal;
-        EditText etSeatingArea = binding.inputSeatingArea;
-        EditText etTableSize = binding.inputTableSize;
+        Spinner spinnerMeal = binding.inputMeal;
+        Spinner spinnerSeatingArea = binding.inputSeatingArea;
+        Spinner spinnerTableSize = binding.inputTableSize;
         EditText etReserveDate = binding.inputDate;
+
+        // Create ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> mealAdapter = ArrayAdapter.createFromResource(
+                requireContext(),
+                R.array.meal_array,
+                R.layout.spinner_dropdown_item
+        );
+        mealAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerMeal.setAdapter(mealAdapter);
+
+        //spinnerMeal.setOnItemSelectedListener(listener);
+
+        ArrayAdapter<CharSequence> seatingAreaAdapter = ArrayAdapter.createFromResource(
+                requireContext(),
+                R.array.seating_area_array,
+                R.layout.spinner_dropdown_item
+        );
+        seatingAreaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSeatingArea.setAdapter(seatingAreaAdapter);
+
+        ArrayAdapter<CharSequence> tableSizeAdapter = ArrayAdapter.createFromResource(
+                requireContext(),
+                R.array.table_size_array,
+                R.layout.spinner_dropdown_item
+        );
+        tableSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTableSize.setAdapter(tableSizeAdapter);
 
         addBookingViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
@@ -76,9 +108,9 @@ public class AddBookingFragment extends Fragment {
         binding.btnAddBooking.setOnClickListener(v -> {
 
             String sPhotoNo = etPhoneNo.getText().toString();
-            String sMealPeriod = etMeal.getText().toString();
-            String sSeatingArea = etSeatingArea.getText().toString();
-            String sTableSize = etTableSize.getText().toString();
+            String sMealPeriod = spinnerMeal.getSelectedItem().toString();
+            String sSeatingArea = spinnerSeatingArea.getSelectedItem().toString();
+            String sTableSize = spinnerTableSize.getSelectedItem().toString();
             String sReserveDate = etReserveDate.getText().toString();
 
             String username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
@@ -92,6 +124,20 @@ public class AddBookingFragment extends Fragment {
 
         return root;
     }
+
+    private AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            // Set text color to black for the selected item
+            ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            // Set text color to grey when nothing is selected
+            ((TextView) parent.getChildAt(0)).setTextColor(Color.GRAY);
+        }
+    };
 
     // Create a method to convert input values into a Reservation object
     public Reservation createReservation(String name, String phoneNo, String meal, String area, String size, String date) {
@@ -112,6 +158,12 @@ public class AddBookingFragment extends Fragment {
     private void sendReservationToApi(Reservation reservation) {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(requireContext());
+
+        // Get the current logged-in user's email
+        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        // Append the user's email to the customerName in the reservation
+        reservation.setName(reservation.getName() + " " + userEmail);
 
         // Define the API endpoint URL
         String apiUrl = "https://web.socem.plymouth.ac.uk/COMP2000/ReservationApi/api/Reservations";

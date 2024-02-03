@@ -122,7 +122,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="92dp"
-            android:background="@color/red_sharp"
             android:backgroundTint="@color/red_sharp"
             android:fontFamily="sans-serif-medium"
             android:text="@string/btnText_register"

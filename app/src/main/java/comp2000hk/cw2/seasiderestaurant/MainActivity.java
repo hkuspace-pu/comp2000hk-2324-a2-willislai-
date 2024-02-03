@@ -1,17 +1,17 @@
 package comp2000hk.cw2.seasiderestaurant;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
+        binding.toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        setSupportActionBar(binding.toolbar);
+        binding.toolbar.setBackgroundColor(getResources().getColor(R.color.red_sharp));
+        setSupportActionBar(binding.toolbar);
+
+        String username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -40,8 +47,11 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        // Set initial toolbar title
+        setToolbarTitle(username);
     }
 
     @Override
@@ -103,8 +113,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+        String username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    // Method to set the toolbar title dynamically
+    private void setToolbarTitle(String username) {
+        if (getSupportActionBar() != null) {
+            String welcomeMsg = "Hi, ";
+            welcomeMsg = welcomeMsg.concat(username) + " !";
+            getSupportActionBar().setTitle(welcomeMsg);
+        }
+    }
+    // When have the user's information, call this method to update the toolbar title
+    public boolean updateToolbarWithUserName(String userName) {
+        setToolbarTitle(userName);
+        return false;
     }
 }

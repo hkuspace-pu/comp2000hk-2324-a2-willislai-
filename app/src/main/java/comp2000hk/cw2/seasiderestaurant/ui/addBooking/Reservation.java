@@ -20,6 +20,7 @@ public class Reservation {
         this.reserveDate = reserveDate;
     }
 
+    // Getter methods
     public String getName() {
         return customerName;
     }
@@ -39,6 +40,25 @@ public class Reservation {
         return reserveDate;
     }
 
-    // Add getters and setters as needed
+    // Setter methods
+    public void setName(String customerName) {
+        this.customerName = customerName;
+    }
+    public void setPhoneNo(String customerPhoneNumber) {
+        this.customerPhoneNumber = customerPhoneNumber;
+    }
+    public void setMeal(String mealPeriod) {
+        this.mealPeriod = mealPeriod;
+    }
+    public void setArea(String seatingArea) {
+        this.seatingArea = seatingArea;
+    }
+    public void setSize(int tableSize) {
+        this.tableSize = tableSize;
+    }
+    public void setDate(String reserveDate) {
+        this.reserveDate = reserveDate;
+    }
+
 }
 

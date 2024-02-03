@@ -18,6 +18,7 @@
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
         android:textSize="20sp"
+        android:textColor="@color/red_sharp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -43,7 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_addBooking" />
 
-    <EditText
+    <Spinner
         android:id="@+id/input_meal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -52,16 +53,20 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/border_lightgray"
         android:drawablePadding="8dp"
-        android:hint="@string/desired_meal"
+        android:prompt="@string/desired_meal"
         android:padding="8dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/gray_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_phoneNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/input_phoneNumber"
+        android:inputType="none"
+        android:completionThreshold="1"
+        android:popupBackground="@color/white"
+        android:completionHint="Select Meal"
+        android:entries="@array/meal_array">
+</Spinner>
 
-    <EditText
+    <Spinner
         android:id="@+id/input_seatingArea"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -70,7 +75,7 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/border_lightgray"
         android:drawablePadding="8dp"
-        android:hint="@string/desired_seatingArea"
+        android:prompt="@string/desired_seatingArea"
         android:padding="8dp"
         android:textColor="@color/black"
         android:textColorHint="@color/gray_light"
@@ -79,7 +84,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_meal" />
 
-    <EditText
+    <Spinner
         android:id="@+id/input_tableSize"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -88,7 +93,7 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/border_lightgray"
         android:drawablePadding="8dp"
-        android:hint="@string/desired_tableSize"
+        android:prompt="@string/desired_tableSize"
         android:padding="8dp"
         android:textColor="@color/black"
         android:textColorHint="@color/gray_light"
@@ -119,17 +124,18 @@
         android:id="@+id/btn_addBooking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
-        android:background="@color/red_sharp"
+        android:layout_marginTop="100dp"
         android:backgroundTint="@color/red_sharp"
         android:fontFamily="sans-serif-medium"
+        android:shadowColor="#41ff4800"
+        android:shadowDx="8"
+        android:shadowDy="8"
         android:text="@string/btnText_addBooking"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_date"
         app:shapeAppearance="@style/ThemeOverlay.Material3.FloatingActionButton.Primary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
