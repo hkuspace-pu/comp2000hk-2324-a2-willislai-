@@ -24,8 +24,8 @@ public class PreferenceFragment extends Fragment {
         binding = FragmentPreferenceBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textPreference;
-        preferenceViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        //final TextView textView = binding.textPreference;
+        //preferenceViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

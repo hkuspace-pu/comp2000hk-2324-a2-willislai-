@@ -45,7 +45,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         // load image from the internet using Glide
-        Glide.with(mContext).load(mData.get(position).getImage_url()).apply(options).into(holder.AnimeThumbnail);
+        Glide.with(mContext).load(mData.get(position).getImage_url()).apply(options).into(holder.foodImageThumbnail);
     }
 
     @Override
@@ -55,11 +55,11 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView AnimeThumbnail;
+        ImageView foodImageThumbnail;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            AnimeThumbnail = itemView.findViewById(R.id.thumbnail);
+            foodImageThumbnail = itemView.findViewById(R.id.thumbnail);
         }
     }
 
