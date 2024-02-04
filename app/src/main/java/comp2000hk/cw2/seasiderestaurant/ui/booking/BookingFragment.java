@@ -6,24 +6,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,9 +28,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import comp2000hk.cw2.seasiderestaurant.AsyncTaskCallback;
 import comp2000hk.cw2.seasiderestaurant.R;
 import comp2000hk.cw2.seasiderestaurant.databinding.FragmentBookingBinding;
-import comp2000hk.cw2.seasiderestaurant.ui.addBooking.Reservation;
 
 public class BookingFragment extends Fragment {
 
@@ -75,8 +71,35 @@ public class BookingFragment extends Fragment {
         return root;
     }
 
+    public void SetupRecyclerView (List<ReservationHist> lstBookingHist) {
+
+        RecycleViewAdapter myAdapter = new RecycleViewAdapter(requireContext(), lstBookingHist) ;
+        recyclerViewBookingHist.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerViewBookingHist.setAdapter(myAdapter);
+
+    }
+
     private void jsonCallBookingHist() {
         URL_JSON = getString(R.string.JSON_API_URL);
+
+        new ApiRequestAsyncTask(URL_JSON, new AsyncTaskCallback() {
+            @Override
+            public void onTaskComplete(JSONArray result) {
+                if (result != null) {
+                    handleJsonResponse(result);
+                } else {
+                    // Handle null or error case
+                    Toast.makeText(requireContext(), "Error fetching data", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).execute();
+    }
+
+    private void handleJsonResponse(JSONArray response) {
+        URL_JSON = getString(R.string.JSON_API_URL);
+
+        // Clear the existing list before populating it with new data
+        lstReservationHist.clear();
 
         JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, URL_JSON, null,
                 new Response.Listener<JSONArray>() {
@@ -145,13 +168,6 @@ public class BookingFragment extends Fragment {
         requestQueue.add(arrayRequest);
     }
 
-    public void SetupRecyclerView (List<ReservationHist> lstBookingHist) {
-
-        RecycleViewAdapter myAdapter = new RecycleViewAdapter(requireContext(), lstBookingHist) ;
-        recyclerViewBookingHist.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerViewBookingHist.setAdapter(myAdapter);
-
-    }
 
     @Override
     public void onDestroyView() {
