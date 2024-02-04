@@ -28,7 +28,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import comp2000hk.cw2.seasiderestaurant.AsyncTaskCallback;
 import comp2000hk.cw2.seasiderestaurant.R;
 import comp2000hk.cw2.seasiderestaurant.databinding.FragmentBookingBinding;
 
@@ -80,22 +79,6 @@ public class BookingFragment extends Fragment {
     }
 
     private void jsonCallBookingHist() {
-        URL_JSON = getString(R.string.JSON_API_URL);
-
-        new ApiRequestAsyncTask(URL_JSON, new AsyncTaskCallback() {
-            @Override
-            public void onTaskComplete(JSONArray result) {
-                if (result != null) {
-                    handleJsonResponse(result);
-                } else {
-                    // Handle null or error case
-                    Toast.makeText(requireContext(), "Error fetching data", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }).execute();
-    }
-
-    private void handleJsonResponse(JSONArray response) {
         URL_JSON = getString(R.string.JSON_API_URL);
 
         // Clear the existing list before populating it with new data

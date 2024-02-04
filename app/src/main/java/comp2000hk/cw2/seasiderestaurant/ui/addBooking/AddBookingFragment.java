@@ -178,12 +178,12 @@ public class AddBookingFragment extends Fragment {
             // Check if sTableSize is a valid number between 1 and 8
             try {
                 int tableSize = Integer.parseInt(sTableSize);
-                if (tableSize < 1 || tableSize > 8) {
-                    showAlertDialog("Invalid Input", "Please enter a valid Table Size (between 1 and 8)");
+                if (tableSize < 1 || tableSize > 10) {
+                    showAlertDialog("Invalid Input", "Please enter a valid Table Size (between 1 and 10)");
                     return;
                 }
             } catch (NumberFormatException e) {
-                showAlertDialog("Invalid Input", "Please enter a valid Table Size (numeric value between 1 and 8)");
+                showAlertDialog("Invalid Input", "Please enter a valid Table Size (numeric value between 1 and 10)");
                 return;
             }
 

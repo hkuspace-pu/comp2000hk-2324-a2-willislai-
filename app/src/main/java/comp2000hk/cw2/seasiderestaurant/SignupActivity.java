@@ -118,8 +118,10 @@ public class SignupActivity extends AppCompatActivity {
 
 
                                     Toast.makeText(SignupActivity.this, "You have signup successfully!", Toast.LENGTH_SHORT).show();
+                                    FirebaseAuth.getInstance().signOut();
                                     Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                                     startActivity(intent);
+                                    finish();
 
                                 } else {
                                     // If sign up fails, display a message to the user.

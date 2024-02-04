@@ -14,6 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 
 import comp2000hk.cw2.seasiderestaurant.databinding.ActivityMainBinding;
@@ -37,21 +38,31 @@ public class MainActivity extends AppCompatActivity {
         binding.toolbar.setBackgroundColor(getResources().getColor(R.color.red_sharp));
         setSupportActionBar(binding.toolbar);
 
-        String username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        FirebaseApp.initializeApp(this);
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_booking, R.id.navigation_addBooking, R.id.navigation_favourite, R.id.navigation_preference)
-                .build();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() == null) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish(); // Finish the current activity to prevent further execution
+        } else {
+            String username = mAuth.getCurrentUser().getDisplayName();
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+            BottomNavigationView navView = findViewById(R.id.nav_view);
+            // Passing each menu ID as a set of Ids because each
+            // menu should be considered as top level destinations.
+            appBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.navigation_home, R.id.navigation_booking, R.id.navigation_addBooking, R.id.navigation_favourite, R.id.navigation_preference)
+                    .build();
 
-        // Set initial toolbar title
-        setToolbarTitle(username);
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+            //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+            NavigationUI.setupWithNavController(binding.navView, navController);
+
+            // Set initial toolbar title
+            setToolbarTitle(username);
+        }
+
     }
 
     @Override
@@ -122,9 +133,12 @@ public class MainActivity extends AppCompatActivity {
     // Method to set the toolbar title dynamically
     private void setToolbarTitle(String username) {
         if (getSupportActionBar() != null) {
-            String welcomeMsg = "Hi, ";
-            welcomeMsg = welcomeMsg.concat(username) + " !";
-            getSupportActionBar().setTitle(welcomeMsg);
+            if (username != null) {
+                String welcomeMsg = "Hi, " + username + "!";
+                getSupportActionBar().setTitle(welcomeMsg);
+            } else {
+                getSupportActionBar().setTitle("Hi!");
+            }
         }
     }
     // When have the user's information, call this method to update the toolbar title
