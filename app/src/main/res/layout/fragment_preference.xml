@@ -1,50 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:key="first_preferencescreen">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".ui.preference.PreferenceFragment">
 
-    <!-- Interested Cuisine -->
-    <CheckBoxPreference
-        android:key="pref_interested_cuisine_japanese"
-        android:title="Japanese"/>
-
-    <CheckBoxPreference
-        android:key="pref_interested_cuisine_chinese"
-        android:title="Chinese"/>
-
-    <!-- Add similar entries for other cuisines -->
-
-    <!-- Interested Food Type -->
-    <CheckBoxPreference
-        android:key="pref_interested_food_seafood"
-        android:title="Seafood"/>
-
-    <CheckBoxPreference
-        android:key="pref_interested_food_meat"
-        android:title="Meat"/>
-
-    <!-- Add similar entries for other food types -->
-
-    <!-- Preferred Price Range -->
-    <CheckBoxPreference
-        android:key="pref_price_below_200"
-        android:title="Below $200"/>
-
-    <CheckBoxPreference
-        android:key="pref_price_200_400"
-        android:title="$200 - $400"/>
-
-    <!-- Add similar entries for other price ranges -->
-
-    <!-- Interested Drinks -->
-    <CheckBoxPreference
-        android:key="pref_interested_drinks_wine"
-        android:title="Wine"/>
-
-    <CheckBoxPreference
-        android:key="pref_interested_drinks_beer"
-        android:title="Beer"/>
-
-    <!-- Add similar entries for other drinks -->
-
-</PreferenceScreen>
+    <TextView
+        android:id="@+id/text_preference"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

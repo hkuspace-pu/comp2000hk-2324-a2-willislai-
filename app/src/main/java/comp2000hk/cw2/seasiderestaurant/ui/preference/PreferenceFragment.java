@@ -10,15 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import androidx.preference.CheckBoxPreference;
-import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceScreen;
-
-
-import comp2000hk.cw2.seasiderestaurant.R;
 import comp2000hk.cw2.seasiderestaurant.databinding.FragmentPreferenceBinding;
 
-public class PreferenceFragment extends PreferenceFragmentCompat {
+public class PreferenceFragment extends Fragment {
 
     private FragmentPreferenceBinding binding;
 
@@ -27,11 +21,12 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
         PreferenceViewModel preferenceViewModel =
                 new ViewModelProvider(this).get(PreferenceViewModel.class);
 
-    }
+        binding = FragmentPreferenceBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        setPreferencesFromResource(R.layout.fragment_preference, rootKey);
+        final TextView textView = binding.textPreference;
+        preferenceViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        return root;
     }
 
     @Override
