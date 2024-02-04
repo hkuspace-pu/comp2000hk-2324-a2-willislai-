@@ -66,4 +66,10 @@ dependencies {
     // Recyclerview Library
     implementation("androidx.recyclerview:recyclerview:1.2.1")
 
+    implementation("androidx.cardview:cardview:1.0.0")
+
+    implementation("androidx.preference:preference-ktx:1.1.1")
+
+
+
 }

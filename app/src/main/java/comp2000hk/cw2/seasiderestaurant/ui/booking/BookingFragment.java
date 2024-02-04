@@ -38,7 +38,7 @@ import comp2000hk.cw2.seasiderestaurant.ui.addBooking.Reservation;
 
 public class BookingFragment extends Fragment {
 
-    private String URL_JSON = "https://web.socem.plymouth.ac.uk/COMP2000/ReservationApi/api/Reservations";
+    private String URL_JSON = "";
     private RequestQueue requestQueue;
     private JsonArrayRequest ArrayRequest;
 
@@ -76,7 +76,7 @@ public class BookingFragment extends Fragment {
     }
 
     private void jsonCallBookingHist() {
-
+        URL_JSON = getString(R.string.JSON_API_URL);
 
         JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, URL_JSON, null,
                 new Response.Listener<JSONArray>() {

@@ -1,14 +1,18 @@
 package comp2000hk.cw2.seasiderestaurant.ui.addBooking;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,6 +35,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import comp2000hk.cw2.seasiderestaurant.R;
 import comp2000hk.cw2.seasiderestaurant.databinding.FragmentAddBookingBinding;
@@ -49,11 +57,12 @@ public class AddBookingFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.textAddBooking;
+
         EditText etPhoneNo = binding.inputPhoneNumber;
         Spinner spinnerMeal = binding.inputMeal;
         Spinner spinnerSeatingArea = binding.inputSeatingArea;
         Spinner spinnerTableSize = binding.inputTableSize;
-        EditText etReserveDate = binding.inputDate;
+        TextView etSelectDate = binding.inputDate;
 
         // Create ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> mealAdapter = ArrayAdapter.createFromResource(
@@ -104,25 +113,118 @@ public class AddBookingFragment extends Fragment {
             // Update UI or perform any necessary action
         });
 
+        etSelectDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // on below line we are getting
+                // the instance of our calendar.
+                final Calendar c = Calendar.getInstance();
+
+                // on below line we are getting
+                // our day, month and year.
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+                // on below line we are creating a variable for date picker dialog.
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        // on below line we are passing context.
+                        requireContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // on below line we are setting date to our text view.
+                                etSelectDate.setText(year + "-" + String.format("%02d", monthOfYear + 1)
+                                        + "-" + String.format("%02d", dayOfMonth));
+
+                            }
+                        },
+                        // on below line we are passing year,
+                        // month and day for selected date in our date picker.
+                        year, month, day);
+                // at last we are calling show to
+                // display our date picker dialog.
+                datePickerDialog.show();
+            }
+        });
 
         binding.btnAddBooking.setOnClickListener(v -> {
 
-            String sPhotoNo = etPhoneNo.getText().toString();
+            String sPhoneNo = etPhoneNo.getText().toString();
             String sMealPeriod = spinnerMeal.getSelectedItem().toString();
             String sSeatingArea = spinnerSeatingArea.getSelectedItem().toString();
             String sTableSize = spinnerTableSize.getSelectedItem().toString();
-            String sReserveDate = etReserveDate.getText().toString();
+            String sReserveDate = etSelectDate.getText().toString();
+
+            // Check if sPhoneNo is empty
+            if (TextUtils.isEmpty(sPhoneNo)) {
+                // If sPhoneNo is empty, show an AlertDialog indicating that the phone number is required
+                showAlertDialog("Invalid Input", "Please enter your phone number");
+                return;
+            }
+            // Check if sMealPeriod is valid
+            if (!(sMealPeriod.equals("Breakfast") || sMealPeriod.equals("Lunch") || sMealPeriod.equals("Tea") || sMealPeriod.equals("Dinner"))) {
+                showAlertDialog("Invalid Input", "Please enter a valid Meal Period (Breakfast, Lunch, Tea, or Dinner)");
+                return;
+            }
+
+            // Check if sSeatingArea is valid
+            if (!(sSeatingArea.equals("Inside") || sSeatingArea.equals("Outside") || sSeatingArea.equals("Seaside") || sSeatingArea.equals("Garden side"))) {
+                showAlertDialog("Invalid Input", "Please enter a valid Seating Area (Inside, Outside, Seaside, or Garden side)");
+                return;
+            }
+
+            // Check if sTableSize is a valid number between 1 and 8
+            try {
+                int tableSize = Integer.parseInt(sTableSize);
+                if (tableSize < 1 || tableSize > 8) {
+                    showAlertDialog("Invalid Input", "Please enter a valid Table Size (between 1 and 8)");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                showAlertDialog("Invalid Input", "Please enter a valid Table Size (numeric value between 1 and 8)");
+                return;
+            }
+
+            // Check if sReserveDate is a valid date
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+            try {
+                // Set lenient to false to enforce strict date parsing
+                dateFormat.setLenient(false);
+                Date parsedDate = dateFormat.parse(sReserveDate);
+
+                // If parsing is successful, the date is in the correct format
+                // Continue with further processing
+            } catch (ParseException e) {
+                // If parsing fails, show an AlertDialog indicating an invalid date format
+                showAlertDialog("Invalid Input", "Please enter a valid date in the format yyyy-MM-dd");
+                return;
+            }
 
             String username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
 
-            Reservation reservation = this.createReservation(username, sPhotoNo, sMealPeriod, sSeatingArea, sTableSize, sReserveDate);
+            Reservation reservation = this.createReservation(username, sPhoneNo, sMealPeriod, sSeatingArea, sTableSize, sReserveDate);
 
             // Call API with reservation data
             sendReservationToApi(reservation);
+            // After a successful API call, reset the input elements
+            etPhoneNo.setText(getString(R.string.your_phoneno));
+            spinnerMeal.setSelection(0);
+            spinnerSeatingArea.setSelection(0);
+            spinnerTableSize.setSelection(0);
+            etSelectDate.setText(getString(R.string.desired_date));
         });
 
-
         return root;
+    }
+
+    private void showAlertDialog(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     private AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
@@ -166,7 +268,7 @@ public class AddBookingFragment extends Fragment {
         reservation.setName(reservation.getName() + " " + userEmail);
 
         // Define the API endpoint URL
-        String apiUrl = "https://web.socem.plymouth.ac.uk/COMP2000/ReservationApi/api/Reservations";
+        String apiUrl = getString(R.string.JSON_API_URL);
 
         // Create a StringRequest with POST method
         StringRequest stringRequest = new StringRequest(Request.Method.POST, apiUrl,

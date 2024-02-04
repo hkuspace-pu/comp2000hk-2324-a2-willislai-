@@ -14,8 +14,6 @@ public class AddBookingViewModel extends ViewModel {
     private MutableLiveData<String> tableSize = new MutableLiveData<>();
     private MutableLiveData<String> date = new MutableLiveData<>();
 
-    private String temp_username = new String("Natasha");
-
     public AddBookingViewModel() {
 
         mText = new MutableLiveData<>();

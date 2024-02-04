@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Seaside Restaurant</string>
 
+    <string name="JSON_API_URL">https://web.socem.plymouth.ac.uk/COMP2000/ReservationApi/api/Reservations</string>
+
     <string name="welcome">Welcome</string>
     <string name="slogan">It’s time to enjoy the finer things in life</string>
 
@@ -49,6 +51,7 @@
     <string name="desired_seatingArea">Enter desired seating area</string>
     <string name="desired_tableSize">Enter desired table size</string>
     <string name="desired_date">Enter desired date</string>
+    <string name="select_date">Select Date</string>
 
     <string name="no_booking_msg">You currently have no bookings. \n Why not add a new booking now?</string>
 
